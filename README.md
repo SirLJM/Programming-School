@@ -1,1 +1,1 @@
-programming_school
+Programming School
