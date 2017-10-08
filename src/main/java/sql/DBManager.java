@@ -13,23 +13,25 @@ public class DBManager {
         String dbName = "programming_school";
         String userName = "root";
         String password = "gothic";
-        if(connection==null) {
-            connection = DriverManager.getConnection(url + dbName, userName,password);
-        }else if(connection.isClosed()) {
-            connection = DriverManager.getConnection(url + dbName, userName,password);
+        if (connection==null) {
+            connection = DriverManager.getConnection(url + dbName, userName, password);
+        } else if (connection.isClosed()) {
+            connection = DriverManager.getConnection(url + dbName, userName, password);
         }
         return connection;
     }
-    public static PreparedStatement getPreparedStatement(String sql, String[] columns) {
-        try {
-            return getConnection().prepareStatement(sql, columns);
-        } catch (SQLException e) {
-            System.err.println(e.getMessage());
-        } catch (Exception e) {
-            System.err.println(e.getMessage());
-        }
-        return null;
-    }
+
+//    public static PreparedStatement getPreparedStatement(String sql, String[] columns) {
+//        try {
+//            return getConnection().prepareStatement(sql, columns);
+//        } catch (SQLException e) {
+//            System.err.println(e.getMessage());
+//        } catch (Exception e) {
+//            System.err.println(e.getMessage());
+//        }
+//        return null;
+//    }
+
     public static PreparedStatement getPreparedStatement(String sql) {
         try {
             return getConnection().prepareStatement(sql);
@@ -40,6 +42,7 @@ public class DBManager {
         }
         return null;
     }
+
     public static void close() {
         try {
             connection.close();
