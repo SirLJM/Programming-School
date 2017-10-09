@@ -169,13 +169,23 @@ public class User {
         return getUsersFromStmt(stmt);
     }
 
-    public static ArrayList<User> loadById(long id) {
-        String sql = "SELECT * FROM users WHERE id = ?";
-        PreparedStatement stmt = DBManager.getPreparedStatement(sql);
+    public static User loadById(long id) {
         try {
+            String sql = "SELECT * FROM users where id=?";
+            PreparedStatement stmt = DBManager.getPreparedStatement(sql);
             stmt.setLong(1, id);
-            return getUsersFromStmt(stmt);
-        } catch (NullPointerException | SQLException e) {
+            ResultSet resultSet = stmt.executeQuery();
+            while (resultSet.next()) {
+                User loadedUser = new User();
+                loadedUser.id = resultSet.getLong("id");
+                loadedUser.username = resultSet.getString("username");
+                loadedUser.password = resultSet.getString("password");
+                loadedUser.email = resultSet.getString("email");
+                loadedUser.salt = resultSet.getString("salt");
+                return loadedUser;
+            }
+
+        } catch (SQLException e) {
             System.err.println(e.getMessage());
         }
         return null;
